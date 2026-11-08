@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGCOME STORE - Joki & Top Up</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, sans-serif; }
+  body { background:#e6f0ff; color:#0a2a4a; min-height:100vh; }
+
+  /* ===== WARNA TETAP (tanpa gradasi) ===== */
+  :root {
+    --biru-utama: #1e6fd9;
+    --biru-gelap: #0d4a9e;
+    --biru-muda: #cfe0ff;
+    --biru-terang: #4a90e2;
+    --putih: #ffffff;
+    --hitam: #0a1f33;
+    --merah: #d92b2b;
+    --hijau: #2b9e4a;
+    --kuning: #e2b007;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--biru-utama);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 4px solid var(--biru-gelap);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand img {
+    width: 42px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid var(--putih);
+    background: var(--putih);
+  }
+  .brand h1 {
+    color: var(--putih);
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+  .brand h1 span { color: var(--kuning); }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .btn-header {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: transform 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .btn-header:active { transform: scale(0.95); }
+  .btn-premium { background: var(--kuning); color: var(--hitam); }
+  .btn-keranjang { background: var(--putih); color: var(--biru-gelap); }
+  .btn-dp { background: var(--merah); color: var(--putih); }
+
+  /* ===== STATUS JAM ===== */
+  .status-bar {
+    background: var(--biru-gelap);
+    color: var(--putih);
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  .status-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  /* ===== KONTEN UTAMA ===== */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 16px 80px;
+  }
+
+  /* ===== KARTU MENU ===== */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: var(--putih);
+    border: 3px solid var(--biru-terang);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 0 var(--biru-muda);
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card .icon { font-size: 2.5rem; margin-bottom: 10px; }
+  .card h3 { color: var(--biru-gelap); margin-bottom: 8px; font-size: 1.1rem; }
+  .card p { font-size: 0.85rem; color: #4a6a8a; margin-bottom: 12px; }
+  .btn-card {
+    display: inline-block;
+    padding: 10px 22px;
+    background: var(--biru-utama);
+    color: var(--putih);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .btn-card:active { background: var(--biru-gelap); }
+
+  /* ===== TOP UP LOGO ===== */
+  .topup-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .topup-item {
+    background: var(--putih);
+    border: 2px solid var(--biru-muda);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--hitam);
+    display: block;
+  }
+  .topup-item img {
+    width: 60px; height: 60px;
+    object-fit: contain;
+    margin-bottom: 6px;
+  }
+  .topup-item span { font-size: 0.8rem; font-weight: bold; display: block; }
+
+  /* ===== MODAL JOKI ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,31,51,0.75);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--putih);
+    border-radius: 14px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px;
+    border: 4px solid var(--biru-utama);
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 10px; right: 14px;
+    background: var(--merah);
+    color: var(--putih);
+    border: none;
+    border-radius: 50%;
+    width: 34px; height: 34px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .joki-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .joki-pick {
+    border: 3px solid var(--biru-muda);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+    background: #f5f9ff;
+  }
+  .joki-pick img { width: 80px; height: 80px; object-fit: contain; }
+  .joki-pick p { font-weight: bold; margin-top: 6px; color: var(--biru-gelap); }
+  .joki-pick.active { border-color: var(--biru-utama); background: var(--biru-muda); box-shadow: 0 0 0 3px var(--biru-terang); }
+
+  /* ===== TABEL JOKI ===== */
+  .joki-menu { display: none; margin-top: 12px; }
+  .joki-menu.active { display: block; }
+  .joki-menu h4 { color: var(--biru-gelap); margin-bottom: 8px; text-align: center; }
+  .disclaimer {
+    background: #ffeaea;
+    border: 2px solid var(--merah);
+    color: var(--merah);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .rank-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  .rank-table th {
+    background: var(--biru-utama);
+    color: var(--putih);
+    padding: 8px 6px;
+    text-align: left;
+  }
+  .rank-table td {
+    padding: 7px 6px;
+    border-bottom: 1px solid var(--biru-muda);
+  }
+  .rank-table tr:nth-child(even) td { background: #f0f6ff; }
+  .rank-table .harga { font-weight: bold; color: var(--biru-gelap); white-space: nowrap; }
+  .btn-pilih {
+    background: var(--hijau);
+    color: var(--putih);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* ===== FORM CHECKOUT ===== */
+  .form-section {
+    background: var(--putih);
+    border: 3px solid var(--biru-utama);
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 16px;
+  }
+  .form-section h3 { color: var(--biru-gelap); margin-bottom: 12px; }
+  .form-group { margin-bottom: 12px; }
+  .form-group label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 4px; }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--biru-muda);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--biru-utama); }
+  .pay-options { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+  .pay-option {
+    flex: 1 1 120px;
+    border: 2px solid var(--biru-muda);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    background: #f5f9ff;
+  }
+  .pay-option.active { border-color: var(--biru-utama); background: var(--biru-muda); }
+  .pay-detail {
+    display: none;
+    background: #f0f6ff;
+    border: 2px dashed var(--biru-terang);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  .pay-detail.active { display: block; }
+  .pay-detail img { max-width: 180px; margin: 8px auto; display: block; border-radius: 8px; }
+  .btn-copy {
+    background: var(--biru-utama);
+    color: var(--putih);
+    border: none;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-left: 6px;
+  }
+  .btn-wa {
+    display: block;
+    width: 100%;
+    background: var(--hijau);
+    color: var(--putih);
+    text-align: center;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 14px;
+  }
+
+  /* ===== ANIMASI TRANSAKSI ===== */
+  .transaksi-animasi {
+    display: none;
+    text-align: center;
+    padding: 30px 10px;
+  }
+  .transaksi-animasi.active { display: block; }
+  .spinner {
+    width: 60px; height: 60px;
+    border: 6px solid var(--biru-muda);
+    border-top: 6px solid var(--biru-utama);
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .transaksi-animasi h3 { color: var(--biru-gelap); margin-bottom: 8px; }
+  .transaksi-animasi p { color: #4a6a8a; font-size: 0.9rem; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--biru-gelap);
+    color: var(--putih);
+    text-align: center;
+    padding: 20px 16px;
+    font-size: 0.85rem;
+    margin-top: 30px;
+  }
+  footer a { color: var(--kuning); text-decoration: none; }
+
+  /* ===== NOTIF TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--hijau);
+    color: var(--putih);
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    z-index: 500;
+    transition: transform 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ===== ANIMASI JAM ===== */
+  .clock-anim {
+    display: inline-block;
+    animation: tick 2s ease-in-out infinite;
+  }
+  @keyframes tick { 0%,100%{transform:rotate(0);} 50%{transform:rotate(6deg);} }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .joki-selector { grid-template-columns: 1fr 1fr; }
+    .topup-grid { grid-template-columns: repeat(3, 1fr); }
+    .brand h1 { font-size: 1.1rem; }
+    .btn-header { padding: 6px 10px; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="brand">
+    <img src="ag.jpg" alt="AGCOME" onerror="this.style.display='none'">
+    <h1>AGCOME <span>STORE</span></h1>
+  </div>
+  <div class="header-right">
+    <button class="btn-header btn-premium" onclick="openPremium()">⭐ Premium</button>
+    <button class="btn-header btn-keranjang" onclick="openKeranjang()">🛒 Keranjang</button>
+    <button class="btn-header btn-dp" onclick="openDP()">💳 DP</button>
+  </div>
+</header>
+
+<!-- ===== STATUS JAM ===== -->
+<div class="status-bar" id="statusBar">
+  <span class="status-dot" id="statusDot" style="background:#2b9e4a;"></span>
+  <span class="clock-anim">🕐</span>
+  <span id="statusText">Memuat status...</span>
+  <span id="jamText"></span>
+</div>
+
+<!-- ===== KONTEN UTAMA ===== -->
+<div class="container">
+
+  <!-- MENU UTAMA -->
+  <div class="menu-grid">
+    <!-- JOKI PEKERJAAN -->
+    <div class="card">
+      <div class="icon">💼</div>
+      <h3>Joki Pekerjaan</h3>
+      <p>Website CV Kerja & Portofolio profesional</p>
+      <a class="btn-card" href="https://agcomstore.github.io/business.com" target="_blank" rel="noopener">Buka Layanan</a>
+    </div>
+
+    <!-- TOP UP -->
+    <div class="card">
+      <div class="icon">🎮</div>
+      <h3>Top Up Game</h3>
+      <p>Roblox, Free Fire, Mobile Legend</p>
+      <div class="topup-grid">
+        <a class="topup-item" href="https://agcomstore.github.io/topup.com" target="_blank" rel="noopener">
+          <img src="rbx.jpg" alt="Roblox" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%231e6fd9%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22white%22 font-size=%2212%22 text-anchor=%22middle%22>RBX</text></svg>'">
+          <span>Roblox</span>
+        </a>
+        <a class="topup-item" href="https://agcomstore.github.io/topup.com" target="_blank" rel="noopener">
+          <img src="ff.jpg" alt="Free Fire" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%23d92b2b%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22white%22 font-size=%2212%22 text-anchor=%22middle%22>FF</text></svg>'">
+          <span>Free Fire</span>
+        </a>
+        <a class="topup-item" href="https://agcomstore.github.io/topup.com" target="_blank" rel="noopener">
+          <img src="ml.jpg" alt="Mobile Legend" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%232b9e4a%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22white%22 font-size=%2212%22 text-anchor=%22middle%22>ML</text></svg>'">
+          <span>Mobile Legend</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- JOKI GAME -->
+    <div class="card">
+      <div class="icon">🏆</div>
+      <h3>Joki Game</h3>
+      <p>Mobile Legend & Pubg Mobile</p>
+      <button class="btn-card" onclick="openJoki()">Lihat Joki</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== MODAL JOKI ===== -->
+<div class="modal-overlay" id="modalJoki">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeJoki()">✕</button>
+    <h2 style="color:var(--biru-gelap);text-align:center;margin-bottom:14px;">🏆 Pilih Joki Game</h2>
+
+    <div class="joki-selector">
+      <div class="joki-pick" id="pickML" onclick="pilihJoki('ml')">
+        <img src="ml.jpg" alt="Mobile Legend" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%232b9e4a%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22white%22 font-size=%2214%22 text-anchor=%22middle%22>ML</text></svg>'">
+        <p>Mobile Legend</p>
+      </div>
+      <div class="joki-pick" id="pickPUBG" onclick="pilihJoki('pubg')">
+        <img src="pubg.jpg" alt="Pubg Mobile" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%23e2b007%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22white%22 font-size=%2214%22 text-anchor=%22middle%22>PUBG</text></svg>'">
+        <p>Pubg Mobile</p>
+      </div>
+    </div>
+
+    <!-- MENU ML -->
+    <div class="joki-menu" id="menuML">
+      <h4>📋 Daftar Joki Mobile Legend</h4>
+      <div class="disclaimer">⚠️ DISCLAIMER: TIDAK MELAYANI REQUEST HERO</div>
+      <table class="rank-table">
+        <thead><tr><th>Rank</th><th>Harga</th><th>Estimasi</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Warrior - Epic</td><td class="harga">IDR 100.000</td><td>1-2 harian</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki ML: Warrior - Epic','IDR 100.000')">Pilih</button></td></tr>
+          <tr><td>Epic - Legend</td><td class="harga">IDR 67.000</td><td>1-2 Harian</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki ML: Epic - Legend','IDR 67.000')">Pilih</button></td></tr>
+          <tr><td>Epic - Mythic</td><td class="harga">IDR 105.000</td><td>2 harian</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki ML: Epic - Mythic','IDR 105.000')">Pilih</button></td></tr>
+          <tr><td>Legend - Mythic Honor</td><td class="harga">IDR 120.000</td><td>2-3 harian</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki ML: Legend - Mythic Honor','IDR 120.000')">Pilih</button></td></tr>
+          <tr><td>Mythic - Mythic Glory</td><td class="harga">IDR 135.000</td><td>3 hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki ML: Mythic - Mythic Glory','IDR 135.000')">Pilih</button></td></tr>
+          <tr><td>Mythic Honor - Mythic Immortal</td><td class="harga">IDR 230.000</td><td>4-5 hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki ML: Mythic Honor - Mythic Immortal','IDR 230.000')">Pilih</button></td></tr>
+          <tr><td>Epic - Immortal</td><td class="harga">IDR 1.200.000</td><td>13-14 Hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki ML: Epic - Immortal','IDR 1.200.000')">Pilih</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MENU PUBG -->
+    <div class="joki-menu" id="menuPUBG">
+      <h4>📋 Daftar Joki Pubg Mobile (Ranked Classic)</h4>
+      <table class="rank-table">
+        <thead><tr><th>Rank</th><th>Harga</th><th>Estimasi</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Bronze - Diamond</td><td class="harga">IDR 100.000</td><td>1-2 hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki PUBG: Bronze - Diamond','IDR 100.000')">Pilih</button></td></tr>
+          <tr><td>Platinum - Ace</td><td class="harga">IDR 80.000</td><td>1 hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki PUBG: Platinum - Ace','IDR 80.000')">Pilih</button></td></tr>
+          <tr><td>Diamond - Ace</td><td class="harga">IDR 60.000</td><td>1 hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki PUBG: Diamond - Ace','IDR 60.000')">Pilih</button></td></tr>
+          <tr><td>Crown - Ace Master</td><td class="harga">IDR 65.000</td><td>1-2 hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki PUBG: Crown - Ace Master','IDR 65.000')">Pilih</button></td></tr>
+          <tr><td>Ace - Conqueror</td><td class="harga">IDR 540.000</td><td>5-7 Hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki PUBG: Ace - Conqueror','IDR 540.000')">Pilih</button></td></tr>
+          <tr><td>Ace - Dominator</td><td class="harga">IDR 230.000</td><td>3 hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki PUBG: Ace - Dominator','IDR 230.000')">Pilih</button></td></tr>
+          <tr><td>Platinum/Diamond/Crown - Conqueror</td><td class="harga">IDR 1.230.000</td><td>14 hari</td><td><button class="btn-pilih" onclick="pilihPesanan('Joki PUBG: Platinum/Diamond/Crown - Conqueror','IDR 1.230.000')">Pilih</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== FORM CHECKOUT ===== -->
+<div class="modal-overlay" id="modalCheckout">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeCheckout()">✕</button>
+    <div id="checkoutContent">
+      <h2 style="color:var(--biru-gelap);margin-bottom:14px;">📝 Checkout Pesanan</h2>
+      <div class="form-section" style="margin-top:0;">
+        <div class="form-group">
+          <label>Pesanan Terpilih</label>
+          <input type="text" id="pesananTerpilih" readonly style="background:#eef4ff;font-weight:bold;">
+        </div>
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" id="namaPembeli" placeholder="Masukkan nama lengkap">
+        </div>
+        <div class="form-group">
+          <label>Nomor WhatsApp</label>
+          <input type="tel" id="waPembeli" placeholder="08xxxxxxxxxx">
+        </div>
+        <div class="form-group">
+          <label>ID Game / Username</label>
+          <input type="text" id="idGame" placeholder="Masukkan ID game Anda">
+        </div>
+
+        <h3 style="margin-top:16px;">💳 Metode Pembayaran</h3>
+        <div class="pay-options">
+          <div class="pay-option" onclick="pilihBayar('dana')">Dana</div>
+          <div class="pay-option" onclick="pilihBayar('seabank')">Sea Bank</div>
+          <div class="pay-option" onclick="pilihBayar('shopee')">Shopee Pay</div>
+        </div>
+
+        <div class="pay-detail" id="detailDana">
+          <p><strong>Scan QR Dana:</strong></p>
+          <img src="scan.jpg" alt="QR Dana" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22180%22 height=%22180%22><rect width=%22180%22 height=%22180%22 fill=%22%23cfe0ff%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22%230d4a9e%22 font-size=%2214%22 text-anchor=%22middle%22>scan.jpg</text></svg>'">
+        </div>
+        <div class="pay-detail" id="detailSeabank">
+          <p><strong>Sea Bank:</strong> 9019 0810 7090</p>
+          <button class="btn-copy" onclick="copyText('901908107090')">Salin</button>
+        </div>
+        <div class="pay-detail" id="detailShopee">
+          <p><strong>Shopee Pay:</strong> +62 857 3156 9186</p>
+          <button class="btn-copy" onclick="copyText('6285731569186')">Salin</button>
+        </div>
+
+        <div class="form-group" style="margin-top:14px;">
+          <label>Kode Pembayaran (dari Admin)</label>
+          <input type="text" id="kodePembayaran" placeholder="Masukkan kode pembayaran" maxlength="10">
+        </div>
+
+        <button class="btn-wa" onclick="kirimWA()">📱 Minta Kode & Kirim via WhatsApp</button>
+      </div>
+    </div>
+    <div class="transaksi-animasi" id="transaksiAnimasi">
+      <div class="spinner"></div>
+      <h3>Transaksi Sedang Diproses...</h3>
+      <p>Pesanan Anda sedang diverifikasi oleh admin.</p>
+      <p style="margin-top:8px;font-size:0.8rem;">Terima kasih telah mempercayai AGCOME STORE 🙏</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL PREMIUM / MEMBERSHIP ===== -->
+<div class="modal-overlay" id="modalPremium">
+  <div class="modal-box" style="max-width:560px;">
+    <button class="modal-close" onclick="closePremium()">✕</button>
+    <h2 style="color:var(--biru-gelap);text-align:center;margin-bottom:6px;">⭐ Agshipmember</h2>
+    <p style="text-align:center;color:#4a6a8a;font-size:0.9rem;margin-bottom:14px;">Membership eksklusif AGCOME STORE</p>
+    <div style="background:#f0f6ff;border:2px solid var(--biru-muda);border-radius:10px;padding:16px;margin-bottom:14px;">
+      <p style="font-weight:bold;color:var(--biru-gelap);font-size:1.1rem;">Rp 45.000 / 30 Hari</p>
+      <ul style="margin:10px 0 0 18px;font-size:0.85rem;color:#2a4a6a;line-height:1.7;">
+        <li>✅ Aktif otomatis selama 30 hari</li>
+        <li>✅ Potongan Rp 10.000 setiap pemesanan</li>
+        <li>✅ Nonaktif otomatis setelah 30 hari</li>
+        <li>✅ Prioritas layanan</li>
+      </ul>
+    </div>
+    <div class="form-section">
+      <div class="form-group">
+        <label>Nama Lengkap</label>
+        <input type="text" id="premNama" placeholder="Masukkan nama">
+      </div>
+      <div class="form-group">
+        <label>Nomor WhatsApp</label>
+        <input type="tel" id="premWA" placeholder="08xxxxxxxxxx">
+      </div>
+      <div class="form-group">
+        <label>Kode Membership (dari Admin)</label>
+        <input type="text" id="premKode" placeholder="Masukkan kode membership" maxlength="10">
+      </div>
+      <button class="btn-wa" onclick="aktifkanPremium()">📱 Minta Kode & Aktifkan via WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL KERANJANG ===== -->
+<div class="modal-overlay" id="modalKeranjang">
+  <div class="modal-box" style="max-width:500px;">
+    <button class="modal-close" onclick="closeKeranjang()">✕</button>
+    <h2 style="color:var(--biru-gelap);text-align:center;margin-bottom:14px;">🛒 Keranjang</h2>
+    <div id="keranjangIsi" style="text-align:center;padding:20px;color:#4a6a8a;">
+      <p style="font-size:2rem;margin-bottom:8px;">🛒</p>
+      <p>Keranjang masih kosong.</p>
+      <p style="font-size:0.8rem;margin-top:6px;">Pilih layanan terlebih dahulu.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL DP ===== -->
+<div class="modal-overlay" id="modalDP">
+  <div class="modal-box" style="max-width:500px;">
+    <button class="modal-close" onclick="closeDP()">✕</button>
+    <h2 style="color:var(--biru-gelap);text-align:center;margin-bottom:14px;">💳 Pembayaran DP</h2>
+    <div class="form-section">
+      <p style="font-size:0.9rem;margin-bottom:12px;">Silakan lakukan pembayaran DP melalui salah satu metode berikut:</p>
+      <div class="pay-options">
+        <div class="pay-option" onclick="pilihDP('dana')">Dana</div>
+        <div class="pay-option" onclick="pilihDP('seabank')">Sea Bank</div>
+        <div class="pay-option" onclick="pilihDP('shopee')">Shopee Pay</div>
+      </div>
+      <div class="pay-detail" id="dpDana">
+        <p><strong>Scan QR Dana:</strong></p>
+        <img src="scan.jpg" alt="QR Dana" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22180%22 height=%22180%22><rect width=%22180%22 height=%22180%22 fill=%22%23cfe0ff%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22%230d4a9e%22 font-size=%2214%22 text-anchor=%22middle%22>scan.jpg</text></svg>'">
+      </div>
+      <div class="pay-detail" id="dpSeabank">
+        <p><strong>Sea Bank:</strong> 9019 0810 7090</p>
+        <button class="btn-copy" onclick="copyText('901908107090')">Salin</button>
+      </div>
+      <div class="pay-detail" id="dpShopee">
+        <p><strong>Shopee Pay:</strong> +62 857 3156 9186</p>
+        <button class="btn-copy" onclick="copyText('6285731569186')">Salin</button>
+      </div>
+      <a class="btn-wa" href="https://wa.me/6285731569186?text=Halo%20Admin%20AGCOME%20STORE%2C%20saya%20ingin%20melakukan%20pembayaran%20DP." target="_blank" rel="noopener">📱 Hubungi Admin untuk DP</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">✅ Berhasil!</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© 2025 AGCOME STORE. All Rights Reserved.</p>
+  <p style="margin-top:4px;">📧 <a href="mailto:afiransyah63@gmail.com">afiransyah63@gmail.com</a></p>
+  <p style="margin-top:4px;">📱 WhatsApp: <a href="https://wa.me/6285731569186" target="_blank" rel="noopener">+62 857-3156-9186</a></p>
+</footer>
+
+<script>
+/* ================= STATUS JAM ================= */
+function updateStatus() {
+  const now = new Date();
+  const jam = now.getHours();
+  const menit = now.getMinutes();
+  const jamStr = String(jam).padStart(2,'0') + ':' + String(menit).padStart(2,'0');
+
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  const jamEl = document.getElementById('jamText');
+
+  let warna = '';
+  let pesan = '';
+
+  if (jam >= 1 && jam < 5) {
+    // 01.00 - 04.59 = TUTUP
+    warna = '#d92b2b';
+    pesan = '😴 Toko Tutup (01:00 - 05:00)';
+  } else if (jam === 13) {
+    // 13.00 - 13.59 = ISTIRAHAT
+    warna = '#e2b007';
+    pesan = '🍽️ Istirahat (13:00 - 13:59)';
+  } else {
+    // 05.00 - 00.59 = BUKA
+    warna = '#2b9e4a';
+    pesan = '🟢 Toko Buka';
+  }
+
+  dot.style.background = warna;
+  text.textContent = pesan;
+  jamEl.textContent = '| ' + jamStr + ' WIB';
+}
+updateStatus();
+setInterval(updateStatus, 30000);
+
+/* ================= MODAL HELPERS ================= */
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+/* ================= JOKI ================= */
+function openJoki() { openModal('modalJoki'); }
+function closeJoki() { closeModal('modalJoki'); }
+
+function pilihJoki(game) {
+  document.getElementById('pickML').classList.remove('active');
+  document.getElementById('pickPUBG').classList.remove('active');
+  document.getElementById('menuML').classList.remove('active');
+  document.getElementById('menuPUBG').classList.remove('active');
+
+  if (game === 'ml') {
+    document.getElementById('pickML').classList.add('active');
+    document.getElementById('menuML').classList.add('active');
+  } else {
+    document.getElementById('pickPUBG').classList.add('active');
+    document.getElementById('menuPUBG').classList.add('active');
+  }
+}
+
+/* ================= PILIH PESANAN ================= */
+let pesananAktif = null;
+
+function pilihPesanan(nama, harga) {
+  pesananAktif = { nama, harga };
+  document.getElementById('pesananTerpilih').value = nama + ' — ' + harga;
+  closeJoki();
+  openModal('modalCheckout');
+  // reset form
+  document.getElementById('namaPembeli').value = '';
+  document.getElementById('waPembeli').value = '';
+  document.getElementById('idGame').value = '';
+  document.getElementById('kodePembayaran').value = '';
+  document.querySelectorAll('#modalCheckout .pay-option').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('#modalCheckout .pay-detail').forEach(el => el.classList.remove('active'));
+  document.getElementById('checkoutContent').style.display = 'block';
+  document.getElementById('transaksiAnimasi').classList.remove('active');
+}
+
+function closeCheckout() { closeModal('modalCheckout'); }
+
+/* ================= METODE BAYAR ================= */
+function pilihBayar(metode) {
+  document.querySelectorAll('#modalCheckout .pay-option').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('#modalCheckout .pay-detail').forEach(el => el.classList.remove('active'));
+
+  event.target.classList.add('active');
+
+  if (metode === 'dana') document.getElementById('detailDana').classList.add('active');
+  else if (metode === 'seabank') document.getElementById('detailSeabank').classList.add('active');
+  else if (metode === 'shopee') document.getElementById('detailShopee').classList.add('active');
+}
+
+/* ================= KIRIM WA (CHECKOUT) ================= */
+function kirimWA() {
+  const nama = document.getElementById('namaPembeli').value.trim();
+  const wa = document.getElementById('waPembeli').value.trim();
+  const idGame = document.getElementById('idGame').value.trim();
+  const kode = document.getElementById('kodePembayaran').value.trim();
+
+  if (!nama || !wa || !idGame) {
+    showToast('⚠️ Lengkapi nama, WhatsApp, dan ID Game!', '#e2b007');
+    return;
+  }
+  if (!kode) {
+    showToast('⚠️ Masukkan kode pembayaran dari admin!', '#e2b007');
+    return;
+  }
+  if (kode.length < 10) {
+    showToast('⚠️ Kode harus 10 digit!', '#e2b007');
+    return;
+  }
+
+  // Cek penyimpanan kode (localStorage)
+  let usedCodes = JSON.parse(localStorage.getItem('agcome_codes') || '[]');
+  if (usedCodes.includes(kode)) {
+    showToast('❌ Kode sudah pernah digunakan!', '#d92b2b');
+    return;
+  }
+  if (!kode.startsWith('134')) {
+    showToast('❌ Kode harus diawali 134!', '#d92b2b');
+    return;
+  }
+  if (!kode.endsWith('00')) {
+    showToast('❌ Kode harus diakhiri 00!', '#d92b2b');
+    return;
+  }
+
+  // Simpan kode
+  usedCodes.push(kode);
+  localStorage.setItem('agcome_codes', JSON.stringify(usedCodes));
+
+  // Tampilkan animasi
+  document.getElementById('checkoutContent').style.display = 'none';
+  document.getElementById('transaksiAnimasi').classList.add('active');
+
+  // Susun pesan WhatsApp
+  const pesan = `Halo Admin AGCOME STORE!%0A%0ASaya ingin memesan:%0A📌 *${pesananAktif.nama}*%0A💰 Harga: ${pesananAktif.harga}%0A%0A👤 Nama: ${nama}%0A📱 WA: ${wa}%0A🎮 ID Game: ${idGame}%0A🔑 Kode: ${kode}%0A%0AMohon diproses. Terima kasih!`;
+
+  setTimeout(() => {
+    window.open('https://wa.me/6285731569186?text=' + pesan, '_blank');
+    showToast('✅ Pesanan dikirim!', '#2b9e4a');
+  }, 2000);
+}
+
+/* ================= COPY ================= */
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('✅ Nomor disalin!', '#2b9e4a');
+  }).catch(() => {
+    showToast('❌ Gagal menyalin', '#d92b2b');
+  });
+}
+
+/* ================= PREMIUM ================= */
+function openPremium() { openModal('modalPremium'); }
+function closePremium() { closeModal('modalPremium'); }
+
+function aktifkanPremium() {
+  const nama = document.getElementById('premNama').value.trim();
+  const wa = document.getElementById('premWA').value.trim();
+  const kode = document.getElementById('premKode').value.trim();
+
+  if (!nama || !wa) {
+    showToast('⚠️ Lengkapi nama dan WhatsApp!', '#e2b007');
+    return;
+  }
+  if (!kode || kode.length < 10) {
+    showToast('⚠️ Kode harus 10 digit!', '#e2b007');
+    return;
+  }
+
+  let usedCodes = JSON.parse(localStorage.getItem('agcome_codes') || '[]');
+  if (usedCodes.includes(kode)) {
+    showToast('❌ Kode sudah digunakan!', '#d92b2b');
+    return;
+  }
+
+  usedCodes.push(kode);
+  localStorage.setItem('agcome_codes', JSON.stringify(usedCodes));
+
+  // Simpan membership
+  localStorage.setItem('agcome_premium', JSON.stringify({
+    nama: nama,
+    wa: wa,
+    aktif: Date.now(),
+    expired: Date.now() + (30 * 24 * 60 * 60 * 1000)
+  }));
+
+  const pesan = `Halo Admin AGCOME STORE!%0A%0ASaya ingin mengaktifkan *Agshipmember*.%0A%0A👤 Nama: ${nama}%0A📱 WA: ${wa}%0A🔑 Kode: ${kode}%0A%0AMohon diaktifkan. Terima kasih!`;
+
+  window.open('https://wa.me/6285731569186?text=' + pesan, '_blank');
+  showToast('✅ Membership diproses!', '#2b9e4a');
+  closePremium();
+}
+
+/* ================= KERANJANG ================= */
+function openKeranjang() { openModal('modalKeranjang'); }
+function closeKeranjang() { closeModal('modalKeranjang'); }
+
+/* ================= DP ================= */
+function openDP() { openModal('modalDP'); }
+function closeDP() { closeModal('modalDP'); }
+
+function pilihDP(metode) {
+  document.querySelectorAll('#modalDP .pay-option').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('#modalDP .pay-detail').forEach(el => el.classList.remove('active'));
+
+  event.target.classList.add('active');
+
+  if (metode === 'dana') document.getElementById('dpDana').classList.add('active');
+  else if (metode === 'seabank') document.getElementById('dpSeabank').classList.add('active');
+  else if (metode === 'shopee') document.getElementById('dpShopee').classList.add('active');
+}
+
+/* ================= TOAST ================= */
+function showToast(msg, color) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.style.background = color || '#2b9e4a';
+  toast.classList.add('show');
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+/* ================= TUTUP MODAL JIKA KLIK OVERLAY ================= */
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>

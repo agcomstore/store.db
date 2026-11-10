@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AGCOMESTORE - Colorful Retro Pixel</title>
+  <style>
+    /* =========================================
+       RETRO PIXEL THEME - COLORFUL PASTEL
+       ========================================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      font-family: 'Courier New', Courier, monospace; 
+    }
+
+    /* === CSS VARIABLES (LIGHT DEFAULT) === */
+    :root {
+      --bg-body: #fdfbf7;
+      --bg-grid: #f0ece1;
+      --bg-window: #ffffff;
+      --bg-panel: #ffffff;
+      --bg-panel-alt: #fdfbf7;
+      --bg-panel-alt-hover: #f0ece1;
+      --bg-header: #e6f7ff;
+      --bg-titlebar: #d8b4e2;
+      --bg-control: #ffffff;
+      --bg-input: #ffffff;
+      --bg-input-focus: #e6f7ff;
+      --bg-poster: #e0f7fa;
+      --bg-scan: #ffffff;
+      --bg-copy: #fdfbf7;
+      --bg-closed: #ffcccb;
+      --bg-loader-track: #ffffff;
+
+      --text-main: #1a1a1a;
+      --text-sub: #4a5568;
+      --border-main: #1a1a1a;
+      --border-shadow-light: #ffffff;
+      --border-shadow-dark: #c0c0c0;
+      --border-shadow-mid: #a0a0a0;
+      --titlebar-shadow: rgba(0, 0, 0, 0.1);
+
+      --btn-joki: #ffcccb;
+      --btn-topup: #b5e2c9;
+      --btn-website: #ffe082;
+      --btn-member: #d8b4e2;
+      --btn-back: #ffcccb;
+      --btn-back-light: #ffe6e6;
+      --btn-back-dark: #cc9999;
+      --btn-sm: #ffe082;
+      --btn-sm-light: #fff3cd;
+      --btn-sm-dark: #ccb35c;
+      --btn-wa: #b5e2c9;
+      --btn-wa-light: #d4f0e0;
+      --btn-wa-dark: #8cbfa4;
+      --price-red: #d32f2f;
+      --price-green: #2e7d32;
+      --disclaimer-bg: #ffb347;
+      --disclaimer-light: #ffd699;
+      --disclaimer-dark: #cc8f39;
+      --selected-game: #a8d8ea;
+      --selected-paket: #b5e2c9;
+      --selected-payment: #ffe082;
+      --badge-member: #b5e2c9;
+      --badge-member-light: #d4f0e0;
+      --loader-fill: #ffb347;
+    }
+
+    /* === DARK MODE VARIABLES === */
+    body.dark-mode {
+      --bg-body: #14121a;
+      --bg-grid: #201c2b;
+      --bg-window: #1e1a28;
+      --bg-panel: #241f30;
+      --bg-panel-alt: #2a2438;
+      --bg-panel-alt-hover: #332c44;
+      --bg-header: #2a2438;
+      --bg-titlebar: #4a3a5c;
+      --bg-control: #2a2438;
+      --bg-input: #1a1622;
+      --bg-input-focus: #2d2540;
+      --bg-poster: #2a2438;
+      --bg-scan: #1a1622;
+      --bg-copy: #2a2438;
+      --bg-closed: #4a2430;
+      --bg-loader-track: #1a1622;
+
+      --text-main: #f0e9ff;
+      --text-sub: #b0a8c8;
+      --border-main: #6b5a82;
+      --border-shadow-light: #3a3248;
+      --border-shadow-dark: #0f0c14;
+      --border-shadow-mid: #1a1622;
+      --titlebar-shadow: rgba(0, 0, 0, 0.5);
+
+      --btn-joki: #6b3a44;
+      --btn-topup: #2d5240;
+      --btn-website: #6b5a1e;
+      --btn-member: #4a3a5c;
+      --btn-back: #6b3a44;
+      --btn-back-light: #8a4a58;
+      --btn-back-dark: #3a1a22;
+      --btn-sm: #6b5a1e;
+      --btn-sm-light: #8a7530;
+      --btn-sm-dark: #3a300f;
+      --btn-wa: #2d5240;
+      --btn-wa-light: #3a6b52;
+      --btn-wa-dark: #1a3025;
+      --price-red: #ff6b6b;
+      --price-green: #6bcf8a;
+      --disclaimer-bg: #8a5a1e;
+      --disclaimer-light: #a87030;
+      --disclaimer-dark: #5a3a0f;
+      --selected-game: #3a5a6b;
+      --selected-paket: #2d5240;
+      --selected-payment: #6b5a1e;
+      --badge-member: #2d5240;
+      --badge-member-light: #3a6b52;
+      --loader-fill: #ffb347;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      background-image: 
+        linear-gradient(var(--bg-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+      background-size: 20px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 16px;
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .app-window {
+      max-width: 1000px;
+      width: 100%;
+      background: var(--bg-window);
+      border: 3px solid var(--border-main);
+      box-shadow: 
+        inset 3px 3px 0 var(--border-shadow-light),
+        inset -3px -3px 0 var(--border-shadow-dark),
+        10px 10px 0 var(--titlebar-shadow);
+      padding: 0;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .title-bar {
+      background: var(--bg-titlebar);
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--border-main);
+      color: var(--text-main);
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .title-bar-controls {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .title-bar-controls span {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: var(--bg-control);
+      border: 2px solid var(--border-main);
+      text-align: center;
+      line-height: 16px;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: inset 1px 1px 0 var(--border-shadow-light), inset -1px -1px 0 var(--border-shadow-mid);
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    /* Tombol toggle tema */
+    #theme-toggle {
+      width: 24px;
+      height: 24px;
+      line-height: 20px;
+      font-size: 13px;
+      background: var(--btn-website);
+      border: 2px solid var(--border-main);
+      box-shadow: inset 1px 1px 0 var(--border-shadow-light), inset -1px -1px 0 var(--border-shadow-mid);
+      cursor: pointer;
+      text-align: center;
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.1s;
+    }
+
+    #theme-toggle:active {
+      transform: translate(1px, 1px);
+    }
+
+    .content-area {
+      padding: 16px;
+    }
+
+    /* === LOADING SCREEN === */
+    #loading-screen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--bg-body);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: opacity 0.3s steps(4), background-color 0.3s;
+      font-size: 1.5rem;
+      color: var(--text-main);
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    .retro-loader-box {
+      width: 280px;
+      height: 30px;
+      background: var(--bg-loader-track);
+      border: 3px solid var(--border-main);
+      box-shadow: inset 2px 2px 0 var(--border-shadow-dark);
+      margin-top: 16px;
+      padding: 2px;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .retro-loader-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--loader-fill);
+      border-right: 2px solid var(--border-main);
+      animation: loadBar 3s steps(60) forwards;
+    }
+
+    @keyframes loadBar {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* === POSTER 16:9 (SEDANG) === */
+    .poster-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .poster-container {
+      width: 60%;
+      max-width: 520px;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-poster);
+      border: 3px solid var(--border-main);
+      box-shadow: inset 3px 3px 0 var(--border-shadow-light), inset -3px -3px 0 var(--border-shadow-mid);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .poster-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .poster-fallback {
+      color: var(--text-main);
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 4px;
+    }
+
+    /* === HEADER === */
+    .header-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      background: var(--bg-header);
+      border: 3px solid var(--border-main);
+      box-shadow: inset 3px 3px 0 var(--border-shadow-light), inset -3px -3px 0 var(--border-shadow-mid);
+      padding: 12px;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .logo-box {
+      width: 64px;
+      height: 64px;
+      border: 3px solid var(--border-main);
+      background: var(--bg-control);
+      box-shadow: inset 2px 2px 0 var(--border-shadow-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .header-text h1 {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      color: var(--text-main);
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .header-text p {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-top: 4px;
+      transition: color 0.3s;
+    }
+
+    /* Badge Member */
+    .member-badge {
+      display: inline-block;
+      background: var(--badge-member);
+      border: 2px solid var(--border-main);
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      margin-left: 8px;
+      text-transform: uppercase;
+      box-shadow: inset 1px 1px 0 var(--badge-member-light);
+      color: var(--text-main);
+    }
+
+    /* === MENU UTAMA === */
+    .main-menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .retro-btn {
+      border: 3px solid var(--border-main);
+      box-shadow: 
+        inset 3px 3px 0 rgba(255, 255, 255, 0.8),
+        inset -3px -3px 0 rgba(0, 0, 0, 0.15);
+      padding: 16px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.1s;
+      color: var(--text-main);
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .retro-btn:active {
+      box-shadow: 
+        inset 3px 3px 0 rgba(0, 0, 0, 0.15),
+        inset -3px -3px 0 rgba(255, 255, 255, 0.8);
+      transform: translate(2px, 2px);
+    }
+
+    .btn-joki { background: var(--btn-joki); }
+    .btn-topup { background: var(--btn-topup); }
+    .btn-website { background: var(--btn-website); }
+    .btn-member { background: var(--btn-member); }
+
+    /* Menu utama gambar 9:16 kecil */
+    .retro-btn .menu-img {
+      width: 40px;
+      height: 71px;
+      object-fit: cover;
+      border: 2px solid var(--border-main);
+      margin-bottom: 8px;
+      background: var(--bg-control);
+    }
+
+    .retro-btn .label {
+      font-size: 1rem;
+      margin-top: 4px;
+    }
+
+    .retro-btn .sub-label {
+      font-size: 0.7rem;
+      color: var(--text-sub);
+      font-weight: normal;
+      transition: color 0.3s;
+    }
+
+    /* === PANEL SECTION === */
+    .section-panel {
+      display: none;
+      background: var(--bg-panel);
+      border: 3px solid var(--border-main);
+      box-shadow: inset 3px 3px 0 var(--border-shadow-light), inset -3px -3px 0 var(--border-shadow-dark);
+      padding: 16px;
+      margin-top: 16px;
+      position: relative;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .section-panel.active {
+      display: block;
+    }
+
+    /* Tombol Back Universal */
+    .btn-back {
+      background: var(--btn-back);
+      border: 3px solid var(--border-main);
+      box-shadow: inset 2px 2px 0 var(--btn-back-light), inset -2px -2px 0 var(--btn-back-dark);
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .btn-back:active {
+      box-shadow: inset 2px 2px 0 var(--btn-back-dark), inset -2px -2px 0 var(--btn-back-light);
+      transform: translate(1px, 1px);
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-bottom: 3px dashed var(--border-shadow-mid);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      color: var(--text-main);
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .game-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      justify-content: center;
+    }
+
+    /* Game item 9:16 kecil */
+    .game-item {
+      width: 45px;
+      height: 80px;
+      border: 3px solid var(--border-main);
+      background: var(--bg-control);
+      box-shadow: inset 2px 2px 0 var(--border-shadow-dark);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .game-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .game-item.selected {
+      background: var(--selected-game);
+      box-shadow: inset 2px 2px 0 var(--border-main);
+    }
+
+    .disclaimer-box {
+      font-size: 0.8rem;
+      color: var(--text-main);
+      background: var(--disclaimer-bg);
+      border: 3px solid var(--border-main);
+      padding: 8px;
+      margin-bottom: 16px;
+      font-weight: bold;
+      box-shadow: inset 2px 2px 0 var(--disclaimer-light), inset -2px -2px 0 var(--disclaimer-dark);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .paket-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .paket-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-panel-alt);
+      border: 3px solid var(--border-main);
+      padding: 8px 12px;
+      cursor: pointer;
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .paket-item:hover {
+      background: var(--bg-panel-alt-hover);
+    }
+
+    .paket-item.selected-paket {
+      background: var(--selected-paket);
+      box-shadow: inset 2px 2px 0 var(--border-main);
+    }
+
+    .paket-name { font-weight: bold; font-size: 0.9rem; }
+    .paket-detail { font-size: 0.75rem; color: var(--text-sub); transition: color 0.3s; }
+    .paket-price { font-size: 1rem; font-weight: bold; color: var(--price-red); transition: color 0.3s; }
+    .paket-price.diskon { color: var(--price-green); text-decoration: line-through; font-size: 0.8rem; transition: color 0.3s; }
+    .paket-price.final { color: var(--price-green); font-weight: bold; transition: color 0.3s; }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .payment-item {
+      background: var(--bg-header);
+      border: 3px solid var(--border-main);
+      padding: 8px;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .payment-item.selected-payment {
+      background: var(--selected-payment);
+      box-shadow: inset 2px 2px 0 var(--border-main);
+    }
+
+    .payment-item img {
+      width: 32px;
+      height: 32px;
+      object-fit: cover;
+      border: 2px solid var(--border-main);
+    }
+
+    .payment-item .pay-label {
+      font-size: 0.65rem;
+      margin-top: 4px;
+      font-weight: bold;
+    }
+
+    .btn-wa {
+      background: var(--btn-wa);
+      border: 3px solid var(--border-main);
+      box-shadow: inset 2px 2px 0 var(--btn-wa-light), inset -2px -2px 0 var(--btn-wa-dark);
+      padding: 12px 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      width: 100%;
+      margin: 12px 0;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .btn-wa:active {
+      box-shadow: inset 2px 2px 0 var(--btn-wa-dark), inset -2px -2px 0 var(--btn-wa-light);
+      transform: translate(1px, 1px);
+    }
+
+    .scan-box {
+      margin: 12px 0;
+      text-align: center;
+      background: var(--bg-scan);
+      padding: 12px;
+      border: 3px solid var(--border-main);
+      box-shadow: inset 2px 2px 0 var(--border-shadow-dark);
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .scan-box img {
+      max-width: 160px;
+      width: 100%;
+      border: 2px solid var(--border-main);
+    }
+
+    .copy-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-copy);
+      padding: 8px 12px;
+      border: 3px solid var(--border-main);
+      margin: 8px 0;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .copy-text { font-weight: bold; font-size: 0.9rem; }
+
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+      align-items: center;
+    }
+
+    .retro-input {
+      background: var(--bg-input);
+      border: 3px solid var(--border-main);
+      box-shadow: inset 2px 2px 0 var(--border-shadow-dark);
+      padding: 8px 12px;
+      font-size: 1rem;
+      flex: 1;
+      min-width: 150px;
+      outline: none;
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .retro-input::placeholder {
+      color: var(--text-sub);
+    }
+
+    .retro-input:focus {
+      background: var(--bg-input-focus);
+    }
+
+    .retro-btn-sm {
+      background: var(--btn-sm);
+      border: 3px solid var(--border-main);
+      box-shadow: inset 2px 2px 0 var(--btn-sm-light), inset -2px -2px 0 var(--btn-sm-dark);
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .retro-btn-sm:active {
+      box-shadow: inset 2px 2px 0 var(--btn-sm-dark), inset -2px -2px 0 var(--btn-sm-light);
+      transform: translate(1px, 1px);
+    }
+
+    .closed-overlay {
+      display: none;
+      background: var(--bg-closed);
+      border: 3px solid var(--border-main);
+      padding: 24px;
+      text-align: center;
+      margin: 20px 0;
+      box-shadow: inset 3px 3px 0 var(--border-shadow-light), inset -3px -3px 0 var(--border-shadow-mid);
+      color: var(--text-main);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .closed-overlay.active { display: block; }
+    .closed-overlay h2 { color: var(--price-red); font-size: 1.8rem; text-transform: uppercase; margin-bottom: 8px; }
+    .countdown-timer { font-size: 2.5rem; font-weight: bold; letter-spacing: 4px; margin: 16px 0; }
+
+    @media (max-width: 640px) {
+      .main-menu-grid { grid-template-columns: 1fr; }
+      .header-text h1 { font-size: 1.4rem; }
+      .paket-item { flex-direction: column; align-items: flex-start; }
+      .paket-price { align-self: flex-end; margin-top: 4px; }
+      .retro-btn { min-height: 90px; }
+      .poster-container { width: 85%; max-width: 360px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-screen">
+    <div>LOADING SYSTEM...</div>
+    <div class="retro-loader-box">
+      <div class="retro-loader-fill"></div>
+    </div>
+  </div>
+
+  <div class="app-window">
+    <div class="title-bar">
+      <div>AGCOMESTORE.exe</div>
+      <div class="title-bar-controls">
+        <button id="theme-toggle" title="Ganti Tema">🌙</button>
+        <span>_</span><span>□</span><span>×</span>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <!-- POSTER SEDANG -->
+      <div class="poster-wrapper">
+        <div class="poster-container">
+          <img src="iklan.jpg" alt="Poster Iklan" 
+               onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'poster-fallback\'>AGCOMESTORE</div>';">
+        </div>
+      </div>
+
+      <div class="header-section">
+        <div class="logo-box">
+          <img src="ag.jpg" alt="AG" 
+               onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'font-weight:bold;font-size:1.2rem;\'>AG</span>';">
+        </div>
+        <div class="header-text">
+          <h1>AGCOMESTORE <span id="member-badge-container"></span></h1>
+          <p>interance build : agroupcomunity · © 2026</p>
+        </div>
+      </div>
+
+      <!-- MENU UTAMA -->
+      <div class="main-menu-grid" id="main-menu">
+        <div class="retro-btn btn-joki" onclick="showSection('joki')">
+          <img src="joki.jpg" alt="Joki" class="menu-img" onerror="this.style.display='none'">
+          <span class="label">JOKI GAME</span>
+          <span class="sub-label">ML · PUBG</span>
+        </div>
+        <div class="retro-btn btn-topup" onclick="showSection('topup')">
+          <img src="topup.jpg" alt="TopUp" class="menu-img" onerror="this.style.display='none'">
+          <span class="label">TOP UP GAME</span>
+          <span class="sub-label">Roblox · FF · ML</span>
+        </div>
+        <div class="retro-btn btn-website" onclick="showSection('jokibuild')">
+          <span style="font-size:1.5rem; font-weight:bold; margin-bottom:8px;">&lt;/&gt;</span>
+          <span class="label">JOKI BUILD WEBSITE</span>
+          <span class="sub-label">CV · Portofolio</span>
+        </div>
+        <div class="retro-btn btn-member" onclick="showSection('membership')">
+          <span style="font-size:1.5rem; font-weight:bold; margin-bottom:8px;">★</span>
+          <span class="label">MEMBERSHIP</span>
+          <span class="sub-label">Nyantaiship</span>
+        </div>
+      </div>
+
+      <!-- SECTION: JOKI GAME -->
+      <div class="section-panel" id="section-joki">
+        <button class="btn-back" onclick="goBack()">← KEMBALI KE MENU</button>
+        <div class="section-title">JOKI GAME</div>
+        
+        <div class="game-row" id="joki-game-row">
+          <div class="game-item" data-game="ml" onclick="selectJokiGame('ml')">
+            <img src="ml.jpg" alt="ML" onerror="this.style.display='none'">
+          </div>
+          <div class="game-item" data-game="pubg" onclick="selectJokiGame('pubg')">
+            <img src="pubg.jpg" alt="PUBG" onerror="this.style.display='none'">
+          </div>
+          <div class="game-item" data-game="hnk" onclick="selectJokiGame('hnk')">
+            <img src="hnk.jpg" alt="Honkai" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div id="joki-ml-paket" style="display:none;">
+          <div class="disclaimer-box">! DISCLAIMER TIDAK MELAYANI REQUEST HERO</div>
+          <div class="paket-list" id="ml-paket-list"></div>
+        </div>
+
+        <div id="joki-pubg-paket" style="display:none;">
+          <div class="paket-list" id="pubg-paket-list"></div>
+        </div>
+
+        <div id="joki-hnk-paket" style="display:none;">
+          <div class="paket-list">
+            <div class="paket-item"><span class="paket-name">Honkai Star Rail - Coming Soon</span></div>
+          </div>
+        </div>
+
+        <div id="joki-payment-area" style="display:none;">
+          <div class="section-title" style="font-size:1rem; margin-top:16px;">PEMBAYARAN</div>
+          
+          <div class="payment-grid" id="joki-payment-grid">
+            <div class="payment-item" data-pay="dana" onclick="selectPayment('joki','dana')">
+              <img src="dana.jpg" alt="DANA" onerror="this.style.display='none'">
+              <div class="pay-label">DANA</div>
+            </div>
+            <div class="payment-item" data-pay="shopeepay" onclick="selectPayment('joki','shopeepay')">
+              <img src="shp.jpg" alt="ShopeePay" onerror="this.style.display='none'">
+              <div class="pay-label">ShopeePay</div>
+            </div>
+            <div class="payment-item" data-pay="seabank" onclick="selectPayment('joki','seabank')">
+              <img src="sb.jpg" alt="SeaBank" onerror="this.style.display='none'">
+              <div class="pay-label">SeaBank</div>
+            </div>
+            <div class="payment-item" data-pay="gopay" onclick="selectPayment('joki','gopay')">
+              <img src="pay.jpg" alt="GoPay" onerror="this.style.display='none'">
+              <div class="pay-label">GoPay</div>
+            </div>
+          </div>
+
+          <div id="joki-payment-detail"></div>
+
+          <button class="btn-wa" onclick="requestCodeWA()">MINTA CODE VIA WHATSAPP</button>
+
+          <div class="input-row">
+            <input type="text" class="retro-input" id="joki-code-input" placeholder="MASUKKAN CODE" maxlength="20">
+            <button class="retro-btn-sm" onclick="verifyCode('joki')">VERIFIKASI</button>
+          </div>
+
+          <div id="joki-form-area" style="display:none;">
+            <div class="section-title" style="font-size:0.9rem; margin-top:16px;">DATA PESANAN</div>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+              <input type="text" class="retro-input" id="joki-nama" placeholder="Nama Tujuan / ID Game">
+              <input type="text" class="retro-input" id="joki-tujuan" placeholder="Tujuan / Kontak">
+            </div>
+            <button class="retro-btn-sm" style="width:100%;" onclick="sendJokiToWA()">KIRIM KE WHATSAPP</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: TOP UP -->
+      <div class="section-panel" id="section-topup">
+        <button class="btn-back" onclick="goBack()">← KEMBALI KE MENU</button>
+        <div class="section-title">TOP UP GAME</div>
+        <div class="game-row">
+          <div class="game-item" onclick="window.open('https://agcomstore.github.io/topup.com','_blank')">
+            <img src="rbx.jpg" alt="Roblox" onerror="this.style.display='none'">
+          </div>
+          <div class="game-item" onclick="window.open('https://agcomstore.github.io/topup.com','_blank')">
+            <img src="ff.jpg" alt="Free Fire" onerror="this.style.display='none'">
+          </div>
+          <div class="game-item" onclick="window.open('https://agcomstore.github.io/topup.com','_blank')">
+            <img src="ml.jpg" alt="Mobile Legend" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <p style="text-align:center; font-size:0.8rem; margin-top:12px; font-weight:bold;">Klik logo untuk menuju halaman Top Up</p>
+      </div>
+
+      <!-- SECTION: JOKI BUILD -->
+      <div class="section-panel" id="section-jokibuild">
+        <button class="btn-back" onclick="goBack()">← KEMBALI KE MENU</button>
+        <div class="section-title">JOKI BUILD WEBSITE</div>
+        <p style="font-size:0.9rem; margin-bottom:16px; font-weight:bold;">Pembuatan website CV, Portofolio, dan lainnya.</p>
+        <button class="retro-btn-sm" style="width:100%; padding:16px; background:var(--btn-wa);" onclick="window.open('https://agcomstore.github.io/business.com','_blank')">MENUJU HALAMAN JOKI BUILD</button>
+      </div>
+
+      <!-- SECTION: MEMBERSHIP -->
+      <div class="section-panel" id="section-membership">
+        <button class="btn-back" onclick="goBack()">← KEMBALI KE MENU</button>
+        <div class="section-title">MEMBERSHIP (Nyantaiship)</div>
+        <p style="font-size:0.9rem; margin-bottom:4px; font-weight:bold;">Aktif 30 hari · Rp 45.000</p>
+        <p style="font-size:0.8rem; margin-bottom:16px;">Diskon Rp 10.000 setiap pemesanan selama aktif. Nonaktif otomatis setelah 30 hari.</p>
+
+        <div class="payment-grid" id="membership-payment-grid">
+          <div class="payment-item" data-pay="dana" onclick="selectPayment('membership','dana')">
+            <img src="dana.jpg" alt="DANA" onerror="this.style.display='none'">
+            <div class="pay-label">DANA</div>
+          </div>
+          <div class="payment-item" data-pay="shopeepay" onclick="selectPayment('membership','shopeepay')">
+            <img src="shp.jpg" alt="ShopeePay" onerror="this.style.display='none'">
+            <div class="pay-label">ShopeePay</div>
+          </div>
+          <div class="payment-item" data-pay="seabank" onclick="selectPayment('membership','seabank')">
+            <img src="sb.jpg" alt="SeaBank" onerror="this.style.display='none'">
+            <div class="pay-label">SeaBank</div>
+          </div>
+          <div class="payment-item" data-pay="gopay" onclick="selectPayment('membership','gopay')">
+            <img src="pay.jpg" alt="GoPay" onerror="this.style.display='none'">
+            <div class="pay-label">GoPay</div>
+          </div>
+        </div>
+
+        <div id="membership-payment-detail"></div>
+
+        <button class="btn-wa" onclick="requestCodeWA()">MINTA CODE VIA WHATSAPP</button>
+
+        <div class="input-row">
+          <input type="text" class="retro-input" id="membership-code-input" placeholder="MASUKKAN CODE" maxlength="20">
+          <button class="retro-btn-sm" onclick="verifyCode('membership')">VERIFIKASI</button>
+        </div>
+
+        <div id="membership-form-area" style="display:none;">
+          <div class="section-title" style="font-size:0.9rem; margin-top:16px;">AKTIVASI</div>
+          <p style="font-size:0.8rem; margin-bottom:8px;">Klik tombol di bawah untuk mengaktifkan membership secara otomatis.</p>
+          <button class="retro-btn-sm" style="width:100%; background:var(--btn-wa); padding:12px;" onclick="activateMembership()">AKTIFKAN MEMBERSHIP SEKARANG</button>
+        </div>
+      </div>
+
+      <div class="closed-overlay" id="closed-overlay">
+        <h2>TOKO TUTUP</h2>
+        <p style="font-weight:bold;">Jam operasional: 07.00 - 00.00</p>
+        <p style="font-size:0.8rem;">(Istirahat 13.00 - 14.00)</p>
+        <div class="countdown-timer" id="countdown-timer">00:00:00</div>
+        <p style="font-size:0.8rem;">Kembali lagi besok</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // === THEME TOGGLE (DARK/LIGHT) ===
+      const themeToggle = document.getElementById('theme-toggle');
+      const THEME_KEY = 'agcom_theme';
+
+      function applyTheme(theme) {
+        if (theme === 'dark') {
+          document.body.classList.add('dark-mode');
+          themeToggle.textContent = '☀️';
+          themeToggle.title = 'Mode Terang';
+        } else {
+          document.body.classList.remove('dark-mode');
+          themeToggle.textContent = '🌙';
+          themeToggle.title = 'Mode Gelap';
+        }
+      }
+
+      // Tentukan tema awal: localStorage > preferensi sistem > light
+      let savedTheme = localStorage.getItem(THEME_KEY);
+      if (!savedTheme) {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        savedTheme = prefersDark ? 'dark' : 'light';
+      }
+      applyTheme(savedTheme);
+
+      themeToggle.addEventListener('click', () => {
+        const isDark = document.body.classList.contains('dark-mode');
+        const newTheme = isDark ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem(THEME_KEY, newTheme);
+      });
+
+      // === LOADING SCREEN ===
+      const loadingScreen = document.getElementById('loading-screen');
+      setTimeout(() => {
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => { loadingScreen.style.display = 'none'; }, 300);
+      }, 3000);
+
+      // --- STATE MEMBERSHIP (LocalStorage) ---
+      let membershipExpiry = localStorage.getItem('agcom_membership_expiry');
+      window.isMemberActive = function() {
+        if (!membershipExpiry) return false;
+        return Date.now() < parseInt(membershipExpiry);
+      };
+
+      function updateMemberBadge() {
+        const container = document.getElementById('member-badge-container');
+        if (window.isMemberActive()) {
+          container.innerHTML = '<span class="member-badge">MEMBER AKTIF</span>';
+        } else {
+          container.innerHTML = '';
+          if (membershipExpiry && Date.now() >= parseInt(membershipExpiry)) {
+            localStorage.removeItem('agcom_membership_expiry');
+            membershipExpiry = null;
+          }
+        }
+      }
+
+      updateMemberBadge();
+
+      const mlPaket = [
+        { name: 'Warrior - Epic', price: '100.000', est: '1-2 harian' },
+        { name: 'Epic - Legend', price: '67.000', est: '1-2 Harian' },
+        { name: 'Epic - Mythic', price: '105.000', est: '2 harian' },
+        { name: 'Legend - Mythic Honor', price: '120.000', est: '2-3 harian' },
+        { name: 'Mythic - Mythic Glory', price: '135.000', est: '3 hari' },
+        { name: 'Mythic Honor - Mythic Immortal', price: '230.000', est: '4-5 hari' },
+        { name: 'Epic - Immortal', price: '1.200.000', est: '13-14 Hari' }
+      ];
+
+      const pubgPaket = [
+        { name: 'Bronze - Diamond', price: '100.000', est: '1-2 hari' },
+        { name: 'Platinum - Ace', price: '80.000', est: '1 hari' },
+        { name: 'Diamond - Ace', price: '60.000', est: '1 hari' },
+        { name: 'Crown - Ace Master', price: '65.000', est: '1-2 hari' },
+        { name: 'Ace - Conqueror', price: '540.000', est: '5-7 Hari' },
+        { name: 'Ace - Dominator', price: '230.000', est: '3 hari' },
+        { name: 'Platinum/Diamond/Crown - Conqueror', price: '1.230.000', est: '14 hari' }
+      ];
+
+      function formatRupiah(angka) {
+        return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+
+      function renderPaket(containerId, data) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        container.innerHTML = data.map((item, idx) => {
+          const originalPrice = parseInt(item.price.replace(/\./g, ''));
+          let displayPrice = `<div class="paket-price">IDR ${item.price}</div>`;
+          
+          if (window.isMemberActive()) {
+            const finalPrice = Math.max(0, originalPrice - 10000);
+            displayPrice = `
+              <div style="text-align:right;">
+                <div class="paket-price diskon">IDR ${item.price}</div>
+                <div class="paket-price final">IDR ${formatRupiah(finalPrice)}</div>
+              </div>
+            `;
+          }
+          
+          return `
+            <div class="paket-item" onclick="selectPaket('${containerId}', ${idx})">
+              <div>
+                <div class="paket-name">${item.name}</div>
+                <div class="paket-detail">Estimasi ${item.est}</div>
+              </div>
+              ${displayPrice}
+            </div>
+          `;
+        }).join('');
+      }
+
+      renderPaket('ml-paket-list', mlPaket);
+      renderPaket('pubg-paket-list', pubgPaket);
+
+      window.selectedJokiGame = null;
+      window.selectedPaket = { name: null, price: null };
+      window.selectedPaymentMethod = { joki: null, membership: null };
+      window.verifiedCode = { joki: false, membership: false };
+      window.usedCodes = new Set();
+
+      window.showSection = function(section) {
+        document.querySelectorAll('.section-panel').forEach(el => el.classList.remove('active'));
+        document.getElementById('main-menu').style.display = 'none';
+        const target = document.getElementById('section-' + section);
+        if (target) target.classList.add('active');
+      };
+
+      window.goBack = function() {
+        document.querySelectorAll('.section-panel').forEach(el => el.classList.remove('active'));
+        document.getElementById('main-menu').style.display = 'grid';
+        
+        document.getElementById('joki-payment-area').style.display = 'none';
+        document.getElementById('joki-form-area').style.display = 'none';
+        document.getElementById('membership-form-area').style.display = 'none';
+        window.verifiedCode.joki = false;
+        window.verifiedCode.membership = false;
+      };
+
+      window.selectJokiGame = function(game) {
+        window.selectedJokiGame = game;
+        window.selectedPaket = { name: null, price: null };
+        window.verifiedCode.joki = false;
+
+        document.querySelectorAll('#joki-game-row .game-item').forEach(el => {
+          el.classList.remove('selected');
+          if (el.dataset.game === game) el.classList.add('selected');
+        });
+
+        document.getElementById('joki-ml-paket').style.display = (game === 'ml') ? 'block' : 'none';
+        document.getElementById('joki-pubg-paket').style.display = (game === 'pubg') ? 'block' : 'none';
+        document.getElementById('joki-hnk-paket').style.display = (game === 'hnk') ? 'block' : 'none';
+
+        document.getElementById('joki-payment-area').style.display = 'block';
+        document.getElementById('joki-payment-detail').innerHTML = '';
+        document.getElementById('joki-form-area').style.display = 'none';
+        document.getElementById('joki-code-input').value = '';
+        
+        document.querySelectorAll('#joki-payment-grid .payment-item').forEach(el => el.classList.remove('selected-payment'));
+        document.querySelectorAll('.paket-item').forEach(el => el.classList.remove('selected-paket'));
+      };
+
+      window.selectPaket = function(containerId, index) {
+        let data = containerId === 'ml-paket-list' ? mlPaket : pubgPaket;
+        if (data && data[index]) {
+          window.selectedPaket = { name: data[index].name, price: data[index].price };
+          document.querySelectorAll('.paket-item').forEach(el => el.classList.remove('selected-paket'));
+          const items = document.querySelectorAll(`#${containerId} .paket-item`);
+          if (items[index]) items[index].classList.add('selected-paket');
+        }
+      };
+
+      window.selectPayment = function(scope, method) {
+        window.selectedPaymentMethod[scope] = method;
+        const gridId = scope === 'joki' ? 'joki-payment-grid' : 'membership-payment-grid';
+        
+        document.querySelectorAll(`#${gridId} .payment-item`).forEach(el => {
+          el.classList.remove('selected-payment');
+          if (el.dataset.pay === method) el.classList.add('selected-payment');
+        });
+
+        const detailId = scope === 'joki' ? 'joki-payment-detail' : 'membership-payment-detail';
+        const detailEl = document.getElementById(detailId);
+        if (!detailEl) return;
+
+        if (method === 'dana') {
+          detailEl.innerHTML = `<div class="scan-box"><img src="scan.jpg" alt="QR DANA" onerror="this.alt='QR DANA'"><p style="font-size:0.7rem; margin-top:4px;">Scan QR DANA</p></div>`;
+        } else if (method === 'gopay') {
+          detailEl.innerHTML = `<div class="scan-box"><img src="scan1.jpg" alt="QR GoPay" onerror="this.alt='QR GoPay'"><p style="font-size:0.7rem; margin-top:4px;">Scan QR GoPay</p></div>`;
+        } else if (method === 'seabank') {
+          detailEl.innerHTML = `
+            <div class="copy-row">
+              <span class="copy-text">9019 0810 7090</span>
+              <button class="retro-btn-sm" onclick="copyText('901908107090')">SALIN</button>
+            </div>`;
+        } else if (method === 'shopeepay') {
+          detailEl.innerHTML = `
+            <div class="copy-row">
+              <span class="copy-text">+62 857 3156 9186</span>
+              <button class="retro-btn-sm" onclick="copyText('6285731569186')">SALIN</button>
+            </div>`;
+        }
+      };
+
+      window.copyText = function(text) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      };
+
+      window.requestCodeWA = function() {
+        const msg = `Halo Admin AGCOMESTORE, saya ingin meminta CODE untuk melakukan pemesanan. Mohon dibantu.`;
+        window.open(`https://wa.me/6285731569186?text=${encodeURIComponent(msg)}`, '_blank');
+      };
+
+      window.verifyCode = function(scope) {
+        const input = document.getElementById(scope === 'joki' ? 'joki-code-input' : 'membership-code-input');
+        const code = input.value.trim();
+        
+        const pattern = /^134\d*00$/; 
+
+        if (!pattern.test(code)) {
+          alert('Format Code Salah!');
+          return;
+        }
+
+        if (window.usedCodes.has(code)) {
+          alert('Code sudah pernah digunakan.');
+          return;
+        }
+
+        window.usedCodes.add(code);
+        window.verifiedCode[scope] = true;
+
+        if (scope === 'joki') {
+          document.getElementById('joki-form-area').style.display = 'block';
+          alert('Code Valid. Silakan isi data pesanan.');
+        } else {
+          document.getElementById('membership-form-area').style.display = 'block';
+          alert('Code Valid. Silakan aktifkan membership.');
+        }
+      };
+
+      window.sendJokiToWA = function() {
+        const nama = document.getElementById('joki-nama').value.trim();
+        const tujuan = document.getElementById('joki-tujuan').value.trim();
+
+        if (!nama || !tujuan) return alert('Isi semua data pesanan.');
+        if (!window.verifiedCode.joki) return alert('Verifikasi code dulu.');
+        if (!window.selectedPaket.name) return alert('Pilih paket dulu.');
+
+        const gameName = window.selectedJokiGame === 'ml' ? 'Mobile Legend' : 'PUBG Mobile';
+        const payMethod = window.selectedPaymentMethod.joki || 'Belum dipilih';
+        
+        const originalPrice = parseInt(window.selectedPaket.price.replace(/\./g, ''));
+        let finalPrice = originalPrice;
+        let diskonText = '';
+        
+        if (window.isMemberActive()) {
+          finalPrice = Math.max(0, originalPrice - 10000);
+          diskonText = `%0A(Diskon Member: -IDR 10.000)`;
+        }
+
+        const msg = `Halo Admin AGCOMESTORE, saya mau pesan JOKI.%0A%0A` +
+          `Game: ${gameName}%0A` +
+          `Paket: ${window.selectedPaket.name}%0A` +
+          `Harga Asli: IDR ${formatRupiah(originalPrice)}%0A` +
+          `Harga Final: IDR ${formatRupiah(finalPrice)}${diskonText}%0A` +
+          `Pembayaran: ${payMethod}%0A` +
+          `Nama Tujuan: ${nama}%0A` +
+          `ID/Kontak: ${tujuan}%0A%0A` +
+          `Code: ${document.getElementById('joki-code-input').value.trim()}%0A` +
+          `Mohon diproses.`;
+
+        window.open(`https://wa.me/6285731569186?text=${msg}`, '_blank');
+        
+        const proc = document.createElement('div');
+        proc.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg-body);display:flex;align-items:center;justify-content:center;z-index:9998;font-size:1.5rem;font-weight:bold;flex-direction:column;color:var(--text-main);';
+        proc.innerHTML = 'TRANSAKSI DIPROSES...<div class="retro-loader-box" style="width:200px;margin-top:16px;"><div class="retro-loader-fill" style="animation-duration: 1s;"></div></div>';
+        document.body.appendChild(proc);
+        setTimeout(() => proc.remove(), 1500);
+      };
+
+      window.activateMembership = function() {
+        if (!window.verifiedCode.membership) return alert('Verifikasi code dulu.');
+
+        const expiryTime = Date.now() + (30 * 24 * 60 * 60 * 1000);
+        localStorage.setItem('agcom_membership_expiry', expiryTime.toString());
+        membershipExpiry = expiryTime;
+
+        alert('Membership berhasil diaktifkan selama 30 hari!');
+        
+        updateMemberBadge();
+        
+        renderPaket('ml-paket-list', mlPaket);
+        renderPaket('pubg-paket-list', pubgPaket);
+        
+        document.getElementById('membership-form-area').style.display = 'none';
+      };
+
+      function checkStoreHours() {
+        const now = new Date();
+        const hour = now.getHours();
+        let isClosed = false;
+        if (hour < 7) isClosed = true;
+        if (hour === 13) isClosed = true; 
+
+        const overlay = document.getElementById('closed-overlay');
+        if (isClosed) {
+          overlay.classList.add('active');
+          updateCountdown();
+        } else {
+          overlay.classList.remove('active');
+        }
+      }
+
+      function updateCountdown() {
+        const now = new Date();
+        const hour = now.getHours();
+        let target = new Date(now);
+
+        if (hour < 7) {
+          target.setHours(7, 0, 0, 0);
+        } else if (hour === 13) {
+          target.setHours(14, 0, 0, 0);
+        } else {
+          return;
+        }
+
+        const diff = target - now;
+        if (diff <= 0) return;
+        
+        const h = Math.floor(diff / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        
+        const timerEl = document.getElementById('countdown-timer');
+        if (timerEl) timerEl.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      }
+
+      setInterval(() => {
+        checkStoreHours();
+        const overlay = document.getElementById('closed-overlay');
+        if (overlay.classList.contains('active')) updateCountdown();
+        updateMemberBadge();
+      }, 1000);
+
+      checkStoreHours();
+    })();
+  </script>
+</body>
+</html>
